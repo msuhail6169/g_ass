@@ -27,10 +27,9 @@ app.get("/health", (req, res) => {
     });
 });
 
-// Start server
-const PORT = process.env.PORT || 3000;
-
-if (require.main === module) {
+// Start server (only locally, not on Vercel serverless)
+if (!process.env.VERCEL && require.main === module) {
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:${PORT}`);
     });
