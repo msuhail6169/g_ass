@@ -1,49 +1,155 @@
-# SeedShare API
+# API Testing & Screenshots
 
-Community Garden Plot Sharing API built with Node.js, Express, and SQLite3.
+All API endpoints were tested using Postman against the deployed application on Vercel.
 
-## Setup Instructions
+The following sections document each API request, its purpose, and its corresponding test result.
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+## 1. Get All Gardeners
 
-2. Start the server:
-   ```bash
-   npm start
-   ```
-   Or for development mode with nodemon:
-   ```bash
-   npm run dev
-   ```
+- **Method:** GET
+- **Endpoint:** `/gardeners`
+- **Description:** Retrieves all gardeners from the database.
 
-3. The server runs by default at `http://localhost:3000`.
+![Get All Gardeners](screenshots/01-get-all-gardeners.png)
 
-## API Endpoints
+## 2. Add Gardener
 
-### General
-- `GET /` - Welcome message
-- `GET /health` - Health check status
+- **Method:** POST
+- **Endpoint:** `/gardeners`
+- **Description:** Creates a new gardener using the provided name and email.
 
-### Gardeners
-- `GET /gardeners` - Get all gardeners
-- `GET /gardeners/:id` - Get gardener by ID
-- `POST /gardeners` - Register a new gardener (`{ "name": "...", "email": "..." }`)
-- `PUT /gardeners/:id` - Update gardener (`{ "name": "...", "email": "..." }`)
-- `DELETE /gardeners/:id` - Delete gardener
+![Add Gardener](screenshots/02-add-gardener.png)
 
-### Plots
-- `GET /plots` - Get all plots (optional filter `?soil=Loam`)
-- `GET /plots/:id` - Get plot by ID
-- `GET /plots/available?date=YYYY-MM-DD` - Get available plots on a given date
-- `POST /plots` - Register a new plot (`{ "name": "...", "soil": "..." }`)
-- `PUT /plots/:id` - Update plot (`{ "name": "...", "soil": "..." }`)
-- `DELETE /plots/:id` - Delete plot
+## 3. Get One Gardener
 
-### Leases
-- `GET /leases` - Get all leases with gardener and plot details
-- `GET /leases/:id` - Get lease by ID
-- `POST /leases` - Create a new lease (`{ "gardener_id": 1, "plot_id": 1, "start_date": "YYYY-MM-DD", "end_date": "YYYY-MM-DD" }`)
-- `PUT /leases/:id` - Update lease details
-- `DELETE /leases/:id` - Cancel / delete lease
+- **Method:** GET
+- **Endpoint:** `/gardeners/:id`
+- **Description:** Retrieves the details of a specific gardener using their ID.
+
+![Get One Gardener](screenshots/03-get-one-gardener.png)
+
+## 4. Update Gardener
+
+- **Method:** PUT
+- **Endpoint:** `/gardeners/:id`
+- **Description:** Updates the details of an existing gardener.
+
+![Update Gardener](screenshots/04-update-gardener.png)
+
+## 5. Delete Gardener
+
+- **Method:** DELETE
+- **Endpoint:** `/gardeners/:id`
+- **Description:** Deletes a gardener from the database.
+
+![Delete Gardener](screenshots/05-delete-gardener.png)
+
+## 6. Get All Plots
+
+- **Method:** GET
+- **Endpoint:** `/plots`
+- **Description:** Retrieves all available plot records from the database.
+
+![Get All Plots](screenshots/06-get-all-plots.png)
+
+## 7. Get One Plot
+
+- **Method:** GET
+- **Endpoint:** `/plots/:id`
+- **Description:** Retrieves a specific plot using its ID.
+
+![Get One Plot](screenshots/08-get-one-plot.png)
+
+## 8. Update Plot
+
+- **Method:** PUT
+- **Endpoint:** `/plots/:id`
+- **Description:** Updates the details of an existing plot.
+
+![Update Plot](screenshots/09-update-plot.png)
+
+## 9. Delete Plot
+
+- **Method:** DELETE
+- **Endpoint:** `/plots/:id`
+- **Description:** Deletes a plot from the database.
+
+![Delete Plot](screenshots/10-delete-plot.png)
+
+## 10. Search Plots by Soil
+
+- **Method:** GET
+- **Endpoint:** `/plots?soil=Clay`
+- **Description:** Filters plots based on their soil type.
+
+![Search Plots by Soil](screenshots/11-search-plots.png)
+
+## 11. Get All Leases
+
+- **Method:** GET
+- **Endpoint:** `/leases`
+- **Description:** Retrieves all lease records, including associated gardener and plot information.
+
+![Get All Leases](screenshots/12-get-all-leases.png)
+
+## 12. Add Lease
+
+- **Method:** POST
+- **Endpoint:** `/leases`
+- **Description:** Creates a lease by providing gardener ID, plot ID, start date and end date.
+
+![Add Lease](screenshots/13-add-lease.png)
+
+## 13. Get One Lease
+
+- **Method:** GET
+- **Endpoint:** `/leases/:id`
+- **Description:** Retrieves a specific lease with its associated gardener and plot details.
+
+![Get One Lease](screenshots/14-get-one-lease.png)
+
+## 14. Update Lease
+
+- **Method:** PUT
+- **Endpoint:** `/leases/:id`
+- **Description:** Updates the details and date range of an existing lease.
+
+![Update Lease](screenshots/15-update-lease.png)
+
+## 15. Delete Lease
+
+- **Method:** DELETE
+- **Endpoint:** `/leases/:id`
+- **Description:** Deletes an existing lease record.
+
+![Delete Lease](screenshots/16-delete-lease.png)
+
+## 16. Invalid Lease Dates
+
+- **Method:** POST
+- **Endpoint:** `/leases`
+- **Description:** Tests date validation by providing an end date earlier than the start date.
+
+**Expected Result:** The API rejects the request with a validation error.
+
+![Invalid Lease Dates](screenshots/17-invalid-lease-dates.png)
+
+## 17. Plot Unavailable
+
+- **Method:** GET
+- **Endpoint:** `/plots/available?date=2026-11-11`
+- **Description:** Tests the plot availability endpoint for a specified date.
+
+![Plot Unavailable](screenshots/18-plot-unavailable.png)
+
+## 18. Plot Available
+
+- **Method:** GET
+- **Endpoint:** `/plots/available?date=2026-12-25`
+- **Description:** Tests the plot availability endpoint for another specified date.
+
+![Plot Available](screenshots/19-plot-available.png)
+
+---
+
+**Note:** Screenshots document the actual API responses obtained during testing. The availability logic should also be verified using occupied and unoccupied plots.
