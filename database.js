@@ -1,8 +1,12 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
+const dbPath = process.env.VERCEL
+    ? path.join("/tmp", "seedshare.db")
+    : path.join(__dirname, "seedshare.db");
+
 const db = new sqlite3.Database(
-    path.join(__dirname, "seedshare.db"),
+    dbPath,
     (err) => {
         if (err) {
             console.error("Database connection failed:", err.message);
